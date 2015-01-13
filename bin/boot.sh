@@ -1,7 +1,8 @@
 # ------------------------------------------------------------------------------------------------
 
 export APP_ROOT=$HOME
-
+exec $APP_ROOT/tomcat/bin/catalina.sh
+<<'COMMENT'
 # -------------------------------config file manipulation-----------------------------------------------------------------
 apache_conf_file=$APP_ROOT/apache2/conf/httpd.conf
 if [ -f $APP_ROOT/public/httpd.conf ]
@@ -36,11 +37,11 @@ $APP_ROOT/apache2/bin/httpd -k start -f $APP_ROOT/apache2/conf/httpd.conf
 #exec $APP_ROOT/apache2/bin/apachectl start
 
 echo "Apache has been started.... $(netstat -a)"
-
+COMMENT
 sleep 1m
 
 echo "After waiting"
 echo "Apache has been started.... $(netstat -a)"
 
-cat $APP_ROOT/apache2/logs/error.log
+#cat $APP_ROOT/apache2/logs/error.log
 # ------------------------------------------------------------------------------------------------
