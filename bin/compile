@@ -30,6 +30,20 @@ compile_apr_util_tgz="$compile_buildpack_dir/vendor/apr-util-1.5.4.tar.gz"
 
 cd $compile_build_dir
 
+
+# ------------------------jdk8------------------------------------------------------------------------
+mkdir java
+cd java
+wget --no-check-certificate --no-cookies --header "Cookie:oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u25-b17/jdk-8u25-linux-x64.tar.gz
+tar zxvf jdk-8u25-linux-x64.tar.gz
+export JAVA_HOME=$compile_build_dir/java
+echo "----> present Directory:$(pwd)" 
+echo "----> list of files and directory:$(ls -l)" 
+export PATH=$JAVA_HOME/bin:$PATH
+cd ..
+# ------------------------jdk8 end------------------------------------------------------------------------
+
+
 # -----------------------------------creating public directory under cache directory-------------------------------------------------------------
 
 mkdir -p $compile_cache_dir/public
@@ -63,7 +77,7 @@ chmod -R uog+rx $apr_util_build_dir
 # -----------------------------------apr-util install end --------------------
 
 cd ..
-COMMENT
+
 tar xzf $compile_httpd_tgz
 
 # -----------------------------------httpd configure,compile and install-------------------------------------------------------------
@@ -117,7 +131,7 @@ echo "----> list of files and directory in apache2/logs:$(ls -l)"
 cd ..
 
 cd ..
-
+COMMENT
 echo "----> list of files and directory:$(ls -l)" 
 
 # -------------------------------copying build pack tomcat to compile build directory-----------------------------------------------------------------
@@ -131,7 +145,7 @@ cp $compile_buildpack_bin/boot.sh .
  
 # -------------------------------testing purpose copying project index.html to apache2-----------------------------------------------------------------
 
-cp $compile_build_dir/public/index.html $apache2_build_dir/htdocs
+#cp $compile_build_dir/public/index.html $apache2_build_dir/htdocs
 echo "Copied index.html into htdocs..."
 
 # -------------------------------not require here to start apache (testing purpose)-----------------------------------------------------------------
@@ -139,9 +153,4 @@ echo "Copied index.html into htdocs..."
 #$apache2_build_dir/bin/httpd -k start -f $apache2_build_dir/conf/httpd.conf
 #echo "Apache has been started.... "$(netstat -a)
 
-# ------------------------jdk8------------------------------------------------------------------------
-
-wget --no-check-certificate --no-cookies --header "Cookie:oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u25-b17/jdk-8u25-linux-x64.tar.gz
-tar -zxf jdk-8u25-linux-x64.tar.gz
-echo "----> list of files and directory:$(ls -l)" 
 # ------------------------------------------------------------------------------------------------
