@@ -27,6 +27,8 @@ compile_httpd_tgz="$compile_buildpack_dir/vendor/httpd-2.2.29.tar.gz"
 compile_apr_tgz="$compile_buildpack_dir/vendor/apr-1.5.1.tar.gz"
 compile_apr_util_tgz="$compile_buildpack_dir/vendor/apr-util-1.5.4.tar.gz"
 # ------------------------------------------------------------------------------------------------
+cd $compile_cache_dir
+echo "----> list of files and directory:$(ls -l)" 
 
 cd $compile_build_dir
 
@@ -34,6 +36,8 @@ cd $compile_build_dir
 # ------------------------jdk8------------------------------------------------------------------------
 mkdir -p $compile_build_dir/java
 cd java
+cd ..
+
 <<'COMMENT'
 wget --no-check-certificate --no-cookies --header "Cookie:oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u25-b17/jdk-8u25-linux-x64.tar.gz
 tar -zxf jdk-8u25-linux-x64.tar.gz
