@@ -27,18 +27,22 @@ compile_httpd_tgz="$compile_buildpack_dir/vendor/httpd-2.2.29.tar.gz"
 compile_apr_tgz="$compile_buildpack_dir/vendor/apr-1.5.1.tar.gz"
 compile_apr_util_tgz="$compile_buildpack_dir/vendor/apr-util-1.5.4.tar.gz"
 # ------------------------------------------------------------------------------------------------
-cd $compile_cache_dir/public
-echo "----> list of files and directory:$(ls -l)" 
+
+if [ -d "$compile_cache_dir/public" ]; then
+  cd $compile_cache_dir/public
+  echo "----> list of files and directory:$(ls -l)" 
+fi
 
 cd $compile_build_dir
 
 
 # ------------------------jdk8------------------------------------------------------------------------
+<<'COMMENT'
 mkdir -p $compile_build_dir/java
 cd java
 cd ..
 
-<<'COMMENT'
+
 wget --no-check-certificate --no-cookies --header "Cookie:oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u25-b17/jdk-8u25-linux-x64.tar.gz
 tar -zxf jdk-8u25-linux-x64.tar.gz
 export JAVA_HOME=$compile_build_dir/jdk1.8.0_25
@@ -151,7 +155,7 @@ mv $compile_cache_dir/public .
 
 # -------------------------------testing purpose copying project index.html to apache2-----------------------------------------------------------------
 
-#cp $compile_build_dir/public/index.html $apache2_build_dir/htdocs
+cp $compile_build_dir/public/index.html $apache2_build_dir/htdocs
 echo "Copied index.html into htdocs..."
 
 # -------------------------------not require here to start apache (testing purpose)-----------------------------------------------------------------
