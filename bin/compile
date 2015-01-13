@@ -160,7 +160,7 @@ mv $compile_cache_dir/public .
 echo "after pwd: $(pwd)"
 echo "----> after list of files and directory:$(ls -l)"
 
-cp $compile_build_dir/public/index.html $apache2_build_dir/htdocs
+#cp $compile_build_dir/public/index.html $apache2_build_dir/htdocs
 echo "Copied index.html into htdocs..."
 
 # -------------------------------not require here to start apache (testing purpose)-----------------------------------------------------------------
