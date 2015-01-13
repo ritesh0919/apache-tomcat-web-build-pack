@@ -1,0 +1,96 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir>
+
+shopt -s dotglob
+set -e
+
+# ------------------------------------------------------------------------------------------------
+#        compile_build_dir: /tmp/staged/app
+#        compile_cache_dir: /tmp/cache
+#        compile_buildpack_bin: /tmp/buildpacks/{project-name}/bin
+#        compile_buildpack_dir: /tmp/buildpacks/{project-name}
+#        pwd: /tmp/staged
+#------------------------------------------------------------------------------------------------------
+compile_build_dir=$1
+compile_cache_dir=$2
+compile_buildpack_dir=$(cd $(dirname $0) && cd .. && pwd)
+compile_buildpack_bin=$compile_buildpack_dir/bin
+
+echo "pwd: $(pwd)"
+echo "compile_build_dir: $compile_build_dir"
+echo "compile_cache_dir: $compile_cache_dir"
+echo "compile_buildpack_bin: $compile_buildpack_bin"
+echo "compile_buildpack_dir: $compile_buildpack_dir"
+
+# ----------------------httpd download kept along with buildpack--------------------------------------------------------------------------
+compile_httpd_tgz="$compile_buildpack_dir/vendor/httpd-2.2.29.tar.gz"
+# ------------------------------------------------------------------------------------------------
+
+cd $compile_build_dir
+
+# -----------------------------------creating public directory under cache directory-------------------------------------------------------------
+
+mkdir -p $compile_cache_dir/public
+mv * $compile_cache_dir/public
+mv $compile_cache_dir/public .
+[[ -f public/Procfile ]] && mv public/Procfile .
+tar xzf $compile_httpd_tgz
+
+# -----------------------------------httpd configure,compile and install-------------------------------------------------------------
+cd $compile_build_dir/httpd-2.2.29
+
+apache2_build_dir=$compile_build_dir/apache2
+#configure
+./configure --prefix=$apache2_build_dir \
+--enable-mods-shared=all \
+--enable-http \
+--enable-deflate \
+--enable-expires \
+--enable-slotmem-shm \
+--enable-headers \
+--enable-rewrite \
+--enable-proxy \
+--enable-proxy-balancer \
+--enable-proxy-http \
+--enable-proxy-fcgi \
+--enable-mime-magic \
+--enable-log-debug \
+--with-mpm=event \
+--with-included-apr 
+echo "config completed to:"$apache2_build_dir
+
+#compile the source
+make
+echo "apache has been compiled successfully..."
+
+#install
+make install
+echo "apache has been installed successfully..."
+
+chmod -R uog+rx $compile_build_dir/apache2
+#chmod -R 777 $compile_build_dir/apache2
+cd ..
+
+echo "----> list of files and directory:$(ls -l)" 
+
+#copying config file from buildpack to apache2 directory also to public directory
+cp -f $compile_buildpack_dir/conf/httpd.conf apache2/conf/httpd.conf
+[[ -f public/httpd.conf ]] && mv public/httpd.conf apache2/conf/httpd.conf
+
+# ------------------------------------------------------------------------------------------------
+
+cp $compile_buildpack_bin/boot.sh .
+ 
+# -------------------------------testing purpose copying project index.html to apache2-----------------------------------------------------------------
+
+cp $compile_build_dir/public/index.html $apache2_build_dir/htdocs
+echo "Copied index.html into htdocs..."
+
+# -------------------------------not require here to start apache (testing purpose)-----------------------------------------------------------------
+#start the apache
+#$apache2_build_dir/bin/httpd -k start -f $apache2_build_dir/conf/httpd.conf
+#echo "Apache has been started.... "$(netstat -a)
+
+# ------------------------------------------------------------------------------------------------
+
+
