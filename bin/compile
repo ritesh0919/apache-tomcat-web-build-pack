@@ -34,12 +34,14 @@ cd $compile_build_dir
 # ------------------------jdk8------------------------------------------------------------------------
 #mkdir -p $compile_build_dir/java
 #cd java
+<<'COMMENT'
 wget --no-check-certificate --no-cookies --header "Cookie:oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u25-b17/jdk-8u25-linux-x64.tar.gz
 tar -zxf jdk-8u25-linux-x64.tar.gz
 export JAVA_HOME=$compile_build_dir/jdk1.8.0_25
 echo "----> present Directory:$(pwd)" 
 echo "----> list of files and directory:$(ls -l)" 
 export PATH=$JAVA_HOME/bin:$PATH
+COMMENT
 # ------------------------jdk8 end------------------------------------------------------------------------
 
 
