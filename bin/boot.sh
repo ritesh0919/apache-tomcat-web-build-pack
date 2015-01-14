@@ -36,7 +36,7 @@ $APP_ROOT/apache2/bin/httpd -v
 $APP_ROOT/apache2/bin/httpd -k start -f $APP_ROOT/apache2/conf/httpd.conf
 #exec $APP_ROOT/apache2/bin/apachectl start
 
-#exec $APP_ROOT/apache-tomcat-7.0.57/bin/startup.sh
+exec $APP_ROOT/apache-tomcat-7.0.57/bin/startup.sh
 
 echo "Apache has been started.... $(netstat -a)"
 
