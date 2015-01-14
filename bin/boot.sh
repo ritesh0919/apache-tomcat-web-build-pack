@@ -51,4 +51,13 @@ cat $APP_ROOT/apache2/logs/error.log
 
 # ------------------------------------startup Tomcat------------------------------------------------------------
 exec $APP_ROOT/tomcat/bin/startup.sh
+
+
+until [ "`curl --silent --show-error --connect-timeout 1 -I http://localhost:8080 | grep 'It works'`" != "" ];
+do
+  sleep 5
+done
+
+echo "Tomcat has been started.... $(netstat -tulpen)"
+
 # ------------------------------------------------------------------------------------------------
