@@ -50,5 +50,5 @@ echo "Apache has been started.... $(netstat -a)"
 cat $APP_ROOT/apache2/logs/error.log
 
 # ------------------------------------startup Tomcat------------------------------------------------------------
-sh $APP_ROOT/tomcat/bin/startup.sh
+exec $APP_ROOT/tomcat/bin/startup.sh
 # ------------------------------------------------------------------------------------------------
