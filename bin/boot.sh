@@ -50,7 +50,7 @@ echo "Apache has been started.... $(netstat -a)"
 cat $APP_ROOT/apache2/logs/error.log
 
 # ------------------------------------startup Tomcat------------------------------------------------------------
-exec $APP_ROOT/tomcat/bin/startup.sh
+exec $APP_ROOT/apache-tomcat-7.0.57/bin/startup.sh
 
 
 until [ "`curl --silent --show-error --connect-timeout 1 -I http://localhost:8080 | grep 'It works'`" != "" ];
