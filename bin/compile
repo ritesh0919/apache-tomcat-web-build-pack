@@ -49,17 +49,18 @@ mv $compile_cache_dir/public .
 [[ -f public/Procfile ]] && mv public/Procfile .
 
 # ------------------------jdk8------------------------------------------------------------------------
-mkdir -p $compile_build_dir/java
-cd $compile_build_dir/java
+#mkdir -p $compile_build_dir/java
+#cd $compile_build_dir/java
 wget --no-check-certificate --no-cookies --header "Cookie:oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u25-b17/jdk-8u25-linux-x64.tar.gz
 tar zxvf jdk-8u25-linux-x64.tar.gz
-export JAVA_HOME=$compile_build_dir/java
+export JAVA_HOME=$compile_build_dir/jdk1.8.0_25
 echo "----> present Directory:$(pwd)" 
 echo "----> list of files and directory:$(ls -l)" 
 export PATH=$JAVA_HOME/bin:$PATH
+chmod -R uog+rx $compile_build_dir/jdk1.8.0_25
 # ------------------------jdk8 end------------------------------------------------------------------------
 
-cd $compile_build_dir
+#cd $compile_build_dir
 tar xzf $compile_httpd_tgz
 
 # -----------------------------------httpd configure,compile and install-------------------------------------------------------------
