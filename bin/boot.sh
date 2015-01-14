@@ -36,8 +36,12 @@ $APP_ROOT/apache2/bin/httpd -v
 $APP_ROOT/apache2/bin/httpd -k start -f $APP_ROOT/apache2/conf/httpd.conf
 #exec $APP_ROOT/apache2/bin/apachectl start
 
-exec $APP_ROOT/apache-tomcat-7.0.57/bin/startup.sh
+#exec $APP_ROOT/apache-tomcat-7.0.57/bin/startup.sh
 
+exec JAVA_HOME=$APP_ROOT/public/jdk1.8.0_25 JAVA_OPTS=\"-Djava.io.tmpdir=$TMPDIR
+ -XX:OnOutOfMemoryError=$APP_ROOT/public/jdk1.8.0_25/bin/killjava.sh -Xmx382293K
+ -Xms382293K -XX:PermSize=64M -Xss995K -Dhttp.port=$PORT\"
+ $APP_ROOT/apache-tomcat-7.0.57/bin/catalina.sh run
 echo "Apache has been started.... $(netstat -a)"
 
 #sleep 1m
