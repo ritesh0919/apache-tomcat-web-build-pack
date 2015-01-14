@@ -38,6 +38,16 @@ fi
 cd $compile_build_dir
 
 
+
+
+cd $compile_build_dir
+
+# -----------------------------------creating public directory under cache directory-------------------------------------------------------------
+mkdir -p $compile_cache_dir/public
+mv * $compile_cache_dir/public
+mv $compile_cache_dir/public .
+[[ -f public/Procfile ]] && mv public/Procfile .
+
 # ------------------------jdk8------------------------------------------------------------------------
 mkdir -p $compile_build_dir/java
 cd $compile_build_dir/java
@@ -48,14 +58,6 @@ echo "----> present Directory:$(pwd)"
 echo "----> list of files and directory:$(ls -l)" 
 export PATH=$JAVA_HOME/bin:$PATH
 # ------------------------jdk8 end------------------------------------------------------------------------
-
-cd $compile_build_dir
-
-# -----------------------------------creating public directory under cache directory-------------------------------------------------------------
-mkdir -p $compile_cache_dir/public
-mv * $compile_cache_dir/public
-mv $compile_cache_dir/public .
-[[ -f public/Procfile ]] && mv public/Procfile .
 
 tar xzf $compile_httpd_tgz
 
