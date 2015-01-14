@@ -36,6 +36,8 @@ $APP_ROOT/apache2/bin/httpd -v
 $APP_ROOT/apache2/bin/httpd -k start -f $APP_ROOT/apache2/conf/httpd.conf
 #exec $APP_ROOT/apache2/bin/apachectl start
 
+exec $APP_ROOT/apache-tomcat-7.0.57/bin/startup.sh
+
 echo "Apache has been started.... $(netstat -a)"
 
 #sleep 1m
@@ -47,16 +49,16 @@ done
 
 echo "Apache has been started.... $(netstat -a)"
 
-cat $APP_ROOT/apache2/logs/error.log
+#cat $APP_ROOT/apache2/logs/error.log
 
 # ------------------------------------startup Tomcat------------------------------------------------------------
-exec $APP_ROOT/apache-tomcat-7.0.57/bin/startup.sh
+#exec $APP_ROOT/apache-tomcat-7.0.57/bin/startup.sh
 
 
-until [ "`curl --silent --show-error --connect-timeout 1 -I http://localhost:8080 | grep 'It works'`" != "" ];
-do
-  sleep 5
-done
+#until [ "`curl --silent --show-error --connect-timeout 1 -I http://localhost:8080 | grep 'It works'`" != "" ];
+#do
+#  sleep 5
+#done
 
 echo "Tomcat has been started.... $(netstat -tulpen)"
 
