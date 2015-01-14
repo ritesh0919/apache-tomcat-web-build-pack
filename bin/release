@@ -8,6 +8,6 @@
 #    -Xms382293K -XX:PermSize=64M -Xss995K -Dhttp.port=$PORT\"
 #    $HOME/app/tomcat/bin/catalina.sh run"
 
-echo -e "---\ndefault_process_types:\n  web:\n sh boot.sh \n JAVA_HOME=$HOME/app/public/jdk1.8.0_25 JAVA_OPTS=\"-Djava.io.tmpdir=$TMPDIR
-    -Dhttp.port=$PORT\" $HOME/app/tomcat/bin/catalina.sh run "
+echo -e "---\ndefault_process_types:\n  web:JAVA_HOME=$HOME/app/public/jdk1.8.0_25 JAVA_OPTS=\"-Djava.io.tmpdir=$TMPDIR
+    -Dhttp.port=$PORT\" $HOME/app/tomcat/bin/catalina.sh run"
 #echo -e "---\ndefault_process_types:\n  web: sh $HOME/app/tomcat/bin/startup.sh"
