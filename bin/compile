@@ -37,51 +37,23 @@ cd $compile_build_dir
 
 
 # ------------------------jdk8------------------------------------------------------------------------
-<<'COMMENT'
 mkdir -p $compile_build_dir/java
-cd java
-cd ..
-
-
+cd $compile_build_dir/java
 wget --no-check-certificate --no-cookies --header "Cookie:oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u25-b17/jdk-8u25-linux-x64.tar.gz
-tar -zxf jdk-8u25-linux-x64.tar.gz
-export JAVA_HOME=$compile_build_dir/jdk1.8.0_25
+tar zxvf jdk-8u25-linux-x64.tar.gz
+export JAVA_HOME=$compile_build_dir/java
 echo "----> present Directory:$(pwd)" 
 echo "----> list of files and directory:$(ls -l)" 
 export PATH=$JAVA_HOME/bin:$PATH
-COMMENT
 # ------------------------jdk8 end------------------------------------------------------------------------
 
+cd $compile_build_dir
 
 # -----------------------------------creating public directory under cache directory-------------------------------------------------------------
-
-
-
-<<'COMMENT'
-# -----------------------------------apr install--------------------
-tar xzf $compile_apr_tgz
-apr_build_dir=$compile_build_dir/apr
-cd apr-1.5.1
-./configure --prefix=$apr_build_dir
-make
-make install
-chmod -R uog+rx $apr_build_dir
-export LD_LIBRARY_PATH="/tmp/staged/app/apr/lib"
-# -----------------------------------apr install end --------------------
-
-cd ..
-
-# -----------------------------------apr-util install--------------------
-tar xzf $compile_apr_util_tgz
-cd apr-util-1.5.4
-apr_util_build_dir=$compile_build_dir/apr_util
-#./configure  --prefix=$apr_util_build_dir\ --with-apr=$apr_build_dir
-./configure  --with-apr=$apr_build_dir
-make
-make install
-chmod -R uog+rx $apr_util_build_dir
-# -----------------------------------apr-util install end --------------------
-COMMENT
+mkdir -p $compile_cache_dir/public
+mv * $compile_cache_dir/public
+mv $compile_cache_dir/public .
+[[ -f public/Procfile ]] && mv public/Procfile .
 
 tar xzf $compile_httpd_tgz
 
@@ -147,25 +119,8 @@ echo "----> list of files and directory:$(ls -l)"
 cd ..
 # -------------------------------copying build pack tomcat end-----------------------------------------------------------------
 cp $compile_buildpack_bin/boot.sh .
+
+# -------------------------------copying webagent conf -----------------------------------------------------------------
+cp $compile_buildpack_dir/conf/webagent.conf .
 echo "pwd: $(pwd)"
 echo "----> list of files and directory:$(ls -l)" 
-
-mkdir -p $compile_cache_dir/public
-mv * $compile_cache_dir/public
-mv $compile_cache_dir/public .
-[[ -f public/Procfile ]] && mv public/Procfile .
-
-# -------------------------------testing purpose copying project index.html to apache2-----------------------------------------------------------------
-
-echo "after pwd: $(pwd)"
-echo "----> after list of files and directory:$(ls -l)"
-
-#cp $compile_build_dir/public/index.html $apache2_build_dir/htdocs
-echo "Copied index.html into htdocs..."
-
-# -------------------------------not require here to start apache (testing purpose)-----------------------------------------------------------------
-#start the apache
-#$apache2_build_dir/bin/httpd -k start -f $apache2_build_dir/conf/httpd.conf
-#echo "Apache has been started.... "$(netstat -a)
-
-# ------------------------------------------------------------------------------------------------
