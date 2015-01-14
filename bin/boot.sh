@@ -38,10 +38,14 @@ $APP_ROOT/apache2/bin/httpd -k start -f $APP_ROOT/apache2/conf/httpd.conf
 
 echo "Apache has been started.... $(netstat -a)"
 
-sleep 1m
+#sleep 1m
 
-echo "After waiting"
+until [ "`curl --silent --show-error --connect-timeout 1 -I http://localhost:$PORT | grep 'It works'`" != "" ];
+do
+  sleep 5
+done
+
 echo "Apache has been started.... $(netstat -a)"
 
-#cat $APP_ROOT/apache2/logs/error.log
+cat $APP_ROOT/apache2/logs/error.log
 # ------------------------------------------------------------------------------------------------
