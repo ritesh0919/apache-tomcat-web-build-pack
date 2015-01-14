@@ -114,13 +114,18 @@ cd ..
 echo "----> list of files and directory:$(ls -l)" 
 
 # -------------------------------copying build pack tomcat to compile build directory-----------------------------------------------------------------
-cp -R $compile_buildpack_dir/tomcat tomcat
-chmod -R uog+rx $compile_build_dir/tomcat
-cd tomcat
-echo "----> list of files and directory:$(ls -l)" 
-cd ..
+#cp -R $compile_buildpack_dir/tomcat tomcat
+#chmod -R uog+rx $compile_build_dir/tomcat
+#cd tomcat
+#echo "----> list of files and directory:$(ls -l)" 
+#cd ..
 #.........................Extracting tomcat from buildpack.......................................
 tar xzf $compile_tomcat_tgz
+tomcat_build_dir= $compile_buildpack_dir/apache-tomcat-7.0.57
+chmod -R uog+rx $tomcat_build_dir
+cd $tomcat_build_dir
+echo "----> list of files and directory:$(ls -l)" 
+cd ..
 # -------------------------------copying build pack tomcat end-----------------------------------------------------------------
 cp $compile_buildpack_bin/boot.sh .
 
