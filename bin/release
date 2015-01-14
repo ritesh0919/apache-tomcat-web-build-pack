@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # bin/release <build-dir>
 
-#echo -e "---\ndefault_process_types:\n  web: sh boot.sh"
+echo -e "---\ndefault_process_types:\n  web: sh boot.sh"
 
 #echo -e "---\ndefault_process_types:\n  web: JAVA_HOME=$HOME/app/jdk1.8.0_25 JAVA_OPTS=\"-Djava.io.tmpdir=$TMPDIR
 #    -XX:OnOutOfMemoryError=$HOME/app/jdk1.8.0_25/bin/killjava.sh -Xmx382293K
 #    -Xms382293K -XX:PermSize=64M -Xss995K -Dhttp.port=$PORT\"
 #    $HOME/app/tomcat/bin/catalina.sh run"
 
-echo -e "---\ndefault_process_types:\n  web:JAVA_HOME=$HOME/app/public/jdk1.8.0_25 JAVA_OPTS=\"-Djava.io.tmpdir=$TMPDIR
-    -Dhttp.port=$PORT\" $HOME/app/tomcat/bin/catalina.sh run"
+#echo -e "---\ndefault_process_types:\n  web:JAVA_HOME=$HOME/app/public/jdk1.8.0_25 JAVA_OPTS=\"-Djava.io.tmpdir=$TMPDIR
+ #   -Dhttp.port=$PORT\" $HOME/app/tomcat/bin/catalina.sh run"
 #echo -e "---\ndefault_process_types:\n  web: sh $HOME/app/tomcat/bin/startup.sh"
