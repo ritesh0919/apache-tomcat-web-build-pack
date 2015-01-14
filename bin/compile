@@ -26,6 +26,8 @@ echo "compile_buildpack_dir: $compile_buildpack_dir"
 compile_httpd_tgz="$compile_buildpack_dir/vendor/httpd-2.2.29.tar.gz"
 compile_apr_tgz="$compile_buildpack_dir/vendor/apr-1.5.1.tar.gz"
 compile_apr_util_tgz="$compile_buildpack_dir/vendor/apr-util-1.5.4.tar.gz"
+compile_tomcat_tgz="$compile_buildpack_dir/vendor/apache-tomcat-7.0.57.tar.gz"
+
 # ------------------------------------------------------------------------------------------------
 
 if [ -d "$compile_cache_dir/public" ]; then
@@ -117,6 +119,8 @@ chmod -R uog+rx $compile_build_dir/tomcat
 cd tomcat
 echo "----> list of files and directory:$(ls -l)" 
 cd ..
+#.........................Extracting tomcat from buildpack.......................................
+tar compile_tomcat_tgz
 # -------------------------------copying build pack tomcat end-----------------------------------------------------------------
 cp $compile_buildpack_bin/boot.sh .
 
