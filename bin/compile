@@ -138,7 +138,7 @@ cd $tomcat_build_dir
 echo "----> list of files and directory:$(ls -l)"
 cd $tomcat_build_dir/webapps
 echo "----> list of files and directory:$(ls -l)"
-cd ..
+cd $compile_build_dir
 # -------------------------------copying build pack tomcat end-----------------------------------------------------------------
 cp $compile_buildpack_bin/boot.sh .
 cp $compile_buildpack_bin/startup.sh .
