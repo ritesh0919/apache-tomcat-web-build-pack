@@ -133,9 +133,11 @@ echo "----> list of files and directory:$(ls -l)"
 cd $compile_build_dir
 tar xzf $compile_tomcat_tgz
 tomcat_build_dir=$compile_build_dir/apache-tomcat-7.0.57
-chmod -R uog+rx $tomcat_build_dir/apache-tomcat-7.0.57
+chmod -R uog+rx $tomcat_build_dir
 cd $tomcat_build_dir
-echo "----> list of files and directory:$(ls -l)" 
+echo "----> list of files and directory:$(ls -l)"
+cd $tomcat_build_dir/webapps
+echo "----> list of files and directory:$(ls -l)"
 cd ..
 # -------------------------------copying build pack tomcat end-----------------------------------------------------------------
 cp $compile_buildpack_bin/boot.sh .
