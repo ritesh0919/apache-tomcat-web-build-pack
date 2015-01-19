@@ -43,11 +43,11 @@ $APP_ROOT/apache2/bin/httpd -k start -f $APP_ROOT/apache2/conf/httpd.conf
 #echo "Apache has been start initiated.... $(netstat -a)"
 
 #sleep 1m
-curl --silent --show-error --connect-timeout 1 -I http://localhost:$VCAP_APP_PORT
-until [ "`curl --silent --show-error --connect-timeout 1 -I http://localhost:$VCAP_APP_PORT | grep 'It works'`" != "" ];
-do
-  sleep 5
-done
+#curl --silent --show-error --connect-timeout 1 -I http://localhost:$VCAP_APP_PORT
+#until [ "`curl --silent --show-error --connect-timeout 1 -I http://localhost:$VCAP_APP_PORT | grep 'It works'`" != "" ];
+#do
+  #sleep 5
+#done
 
 echo "Apache has been started... $(netstat -a)"
 #cat $APP_ROOT/apache2/logs/error.log
