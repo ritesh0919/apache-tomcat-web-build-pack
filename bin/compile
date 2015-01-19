@@ -51,7 +51,8 @@ mv $compile_cache_dir/public .
 # ------------------------jdk8------------------------------------------------------------------------
 #mkdir -p $compile_build_dir/java
 #cd $compile_build_dir/java
-wget --no-check-certificate --no-cookies --header "Cookie:oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u25-b17/jdk-8u25-linux-x64.tar.gz
+#wget --no-check-certificate --no-cookies --header "Cookie:oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u25-b17/jdk-8u25-linux-x64.tar.gz
+wget https://s3.amazonaws.com/covisintrnd.com-software/jdk-8u25-linux-x64.gz
 tar zxvf jdk-8u25-linux-x64.tar.gz
 export JAVA_HOME=$compile_build_dir/jdk1.8.0_25
 echo "----> present Directory:$(pwd)" 
