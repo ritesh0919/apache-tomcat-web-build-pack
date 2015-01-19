@@ -133,7 +133,7 @@ echo "----> list of files and directory:$(ls -l)"
 cd $compile_build_dir
 tar xzf $compile_tomcat_tgz
 tomcat_build_dir=$compile_build_dir/apache-tomcat-7.0.57
-chmod -R uog+rx $tomcat_build_dir
+chmod -R uog+rx $tomcat_build_dir/apache-tomcat-7.0.57
 cd $tomcat_build_dir
 echo "----> list of files and directory:$(ls -l)" 
 cd ..
