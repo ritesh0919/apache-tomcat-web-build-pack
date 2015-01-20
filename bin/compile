@@ -29,12 +29,6 @@ compile_apr_util_tgz="$compile_buildpack_dir/vendor/apr-util-1.5.4.tar.gz"
 compile_tomcat_tgz="$compile_buildpack_dir/vendor/apache-tomcat-7.0.57.tar.gz"
 
 # ------------------------------------------------------------------------------------------------
-
-if [ -d "$compile_cache_dir/public" ]; then
-  cd $compile_cache_dir/public
-  echo "----> list of files and directory:$(ls -l)" 
-fi
-
 cd $compile_build_dir
 
 # -----------------------------------creating public directory under cache directory-------------------------------------------------------------
@@ -43,26 +37,6 @@ mv * $compile_cache_dir/public
 mv $compile_cache_dir/public .
 [[ -f public/Procfile ]] && mv public/Procfile .
 
-<<'COMMENT'
-# -------------------------------copying build pack apache2 to compile build directory-----------------------------------------------------------------
-cp -r $compile_buildpack_dir/vendor/apache2 .
-chmod -R uog+rx  $compile_build_dir/apache2
-#--- above will be removed ----
-
-# ------------------------jdk8------------------------------------------------------------------------
-#mkdir -p $compile_build_dir/java
-#cd $compile_build_dir/java
-#wget --no-check-certificate --no-cookies --header "Cookie:oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u25-b17/jdk-8u25-linux-x64.tar.gz
-#tar zxvf jdk-8u25-linux-x64.tar.gz
-wget https://s3.amazonaws.com/covisintrnd.com-software/jdk-8u25-linux-x64.gz
-tar zxvf jdk-8u25-linux-x64.gz
-export JAVA_HOME=$compile_build_dir/jdk1.8.0_25
-echo "----> present Directory:$(pwd)" 
-echo "----> list of files and directory:$(ls -l)" 
-export PATH=$JAVA_HOME/bin:$PATH
-chmod -R uog+rx $compile_build_dir/jdk1.8.0_25
-# ------------------------jdk8 end------------------------------------------------------------------------
-COMMENT
 #jdk8
 if [ -d jdk1.8.0_25 ]; then
   echo "-----> jdk1.8.0_25 folder found, moving along."
@@ -129,63 +103,26 @@ echo "apache has been compiled successfully..."
 make install
 echo "apache has been installed successfully..."
 chmod -R uog+rx $compile_build_dir/apache2
+
+cd $compile_build_dir
+#copying config file from buildpack to apache2 directory also to public directory
+cp -f $compile_buildpack_dir/conf/httpd.conf  apache2/conf/httpd.conf
+#copying vhost config file from buildpack to apache2 directory also to public directory
+cp -f $compile_buildpack_dir/conf/httpd-vhosts.conf  apache2/conf/extra/httpd-vhosts.conf
+cp -R $compile_buildpack_dir/logs apache2
+
 echo "Done!"
   fi
 fi
-#jdk8 - end
+#apache - httpd - end
+
 cd $compile_build_dir
 
 export JAVA_HOME="$$compile_build_dir/jdk1.8.0_25"
 export PATH="$JAVA_HOME/bin:$PATH"
 
-<<'COMMENT'
-tar xzf $compile_httpd_tgz
-
-# -----------------------------------httpd configure,compile and install-------------------------------------------------------------
-cd $compile_build_dir/httpd-2.2.29
-
-apache2_build_dir=$compile_build_dir/apache2
-#configure
-./configure --prefix=$apache2_build_dir \
---enable-mods-shared=all \
---enable-http \
---enable-deflate \
---enable-expires \
---enable-slotmem-shm \
---enable-headers \
---enable-rewrite \
---enable-proxy \
---enable-proxy-balancer \
---enable-proxy-http \
---enable-proxy-fcgi \
---enable-mime-magic \
---enable-log-debug \
---with-mpm=event \
---with-included-apr 
-echo "config completed to:"$apache2_build_dir
-
-#compile the source
-make
-echo "apache has been compiled successfully..."
-
-#install
-make install
-echo "apache has been installed successfully..."
-
-chmod -R uog+rx $compile_build_dir/apache2
-COMMENT
-cd $compile_build_dir
 
 
-#copying config file from buildpack to apache2 directory also to public directory
-cp -f $compile_buildpack_dir/conf/httpd.conf  apache2/conf/httpd.conf
-[[ -f public/httpd.conf ]] && mv public/httpd.conf  apache2/conf/httpd.conf
-
-#copying vhost config file from buildpack to apache2 directory also to public directory
-cp -f $compile_buildpack_dir/conf/httpd-vhosts.conf  apache2/conf/extra/httpd-vhosts.conf
-[[ -f public/httpd-vhosts.conf ]] && mv public/httpd-vhosts.conf  apache2/conf/extra/httpd-vhosts.conf
-
-cp -R $compile_buildpack_dir/logs apache2
 # ------------------------------------------------------------------------------------------------
 
 cd  $compile_build_dir/apache2
@@ -204,15 +141,6 @@ echo "----> list of files and directory:$(ls -l)"
  
 #cd ..
 
-#.........................Extracting tomcat from buildpack.......................................
-
-# -------------------------------copying build pack tomcat to compile build directory-----------------------------------------------------------------
-#cp -R $compile_buildpack_dir/tomcat tomcat
-#chmod -R uog+rx $compile_build_dir/tomcat
-#cd tomcat
-#echo "----> list of files and directory:$(ls -l)" 
-#cd ..
-#.........................Extracting tomcat from buildpack.......................................
 cd $compile_build_dir
 tar xzf $compile_tomcat_tgz
 tomcat_build_dir=$compile_build_dir/apache-tomcat-7.0.57
