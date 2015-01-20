@@ -47,6 +47,7 @@ mv $compile_cache_dir/public .
 mkdir -p $compile_build_dir/apache2
 cp -R $compile_buildpack_dir/vendor/apache2 $compile_build_dir/apache2
 chmod -R uog+rx  $compile_build_dir/apache2
+chmod -R uog+rx  $compile_build_dir/apache2/conf
 #--- above will be removed ----
 
 # ------------------------jdk8------------------------------------------------------------------------
