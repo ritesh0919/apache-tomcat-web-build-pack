@@ -36,18 +36,19 @@ if [ -d "$compile_cache_dir/public" ]; then
 fi
 
 cd $compile_build_dir
-<<'COMMENT'
+
 # -----------------------------------creating public directory under cache directory-------------------------------------------------------------
 mkdir -p $compile_cache_dir/public
 mv * $compile_cache_dir/public
 mv $compile_cache_dir/public .
 [[ -f public/Procfile ]] && mv public/Procfile .
-COMMENT
+
+<<'COMMENT'
 # -------------------------------copying build pack apache2 to compile build directory-----------------------------------------------------------------
 cp -r $compile_buildpack_dir/vendor/apache2 .
 chmod -R uog+rx  $compile_build_dir/apache2
 #--- above will be removed ----
-
+COMMENT
 # ------------------------jdk8------------------------------------------------------------------------
 #mkdir -p $compile_build_dir/java
 #cd $compile_build_dir/java
