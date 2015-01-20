@@ -106,9 +106,7 @@ COMMENT
 mkdir $compile_build_dir/apache2
 cp -R $compile_buildpack_dir/vendor/apache2  $compile_build_dir/apache2
 chmod -R uog+rx $compile_build_dir/apache2
-cd $compile_build_dir/apache2
-echo "----> apache2 ::list of files and directory:$(ls -l)"
-#--- will be removed ----
+#--- above will be removed ----
 
 #copying config file from buildpack to apache2 directory also to public directory
 cp -f $compile_buildpack_dir/conf/httpd.conf apache2/conf/httpd.conf
