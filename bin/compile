@@ -121,26 +121,6 @@ cd $compile_build_dir
 export JAVA_HOME="$$compile_build_dir/jdk1.8.0_25"
 export PATH="$JAVA_HOME/bin:$PATH"
 
-
-
-# ------------------------------------------------------------------------------------------------
-
-cd  $compile_build_dir/apache2
-
-#chmod -R 777 $compile_build_dir/apache2
-echo "----> list of files and directory in apache2:$(ls -l)"
-cd logs
-echo "----> list of files and directory in apache2/logs:$(ls -l)"
-cd ..
-
-cd ..
-
-echo "----> list of files and directory:$(ls -l)" 
-
-
- 
-#cd ..
-
 #tomcat
 if [ -d apache-tomcat-7.0.57 ]; then
   echo "-----> apache-tomcat-7.0.57 folder found, moving along."
@@ -154,7 +134,6 @@ else
 
   else
     echo -n "-----> Extracting (apache-tomcat-7.0.57)....."
-    cd $compile_build_dir
     tar xzf $compile_tomcat_tgz
     tomcat_build_dir=$compile_build_dir/apache-tomcat-7.0.57
     chmod -R uog+rx $tomcat_build_dir
@@ -164,12 +143,6 @@ else
   fi
 fi
 #tomcat - end
-cd $compile_build_dir
-echo "----> list of files and directory:$(ls -l)"
-mkdir $tomcat_build_dir/webapps/covisint
-cp $compile_build_dir/public/index.html $tomcat_build_dir/webapps/covisint
-cd $tomcat_build_dir/webapps/covisint
-echo "----> list of files in covisint directory: $(ls -l)"
 
 cd $compile_build_dir
 # -------------------------------copying build pack tomcat end-----------------------------------------------------------------
@@ -178,8 +151,6 @@ cp $compile_buildpack_bin/startup.sh .
 
 # -------------------------------copying webagent conf -----------------------------------------------------------------
 cp $compile_buildpack_dir/conf/webagent.conf .
-echo "pwd: $(pwd)"
-echo "----> list of files and directory:$(ls -l)" 
 
 rm -rf "$compile_cache_dir/jdk1.8.0_25"
 cp -r jdk1.8.0_25 "$compile_cache_dir/jdk1.8.0_25"
@@ -189,3 +160,15 @@ cp -r apache2 "$compile_cache_dir/apache2"
 
 rm -rf "$compile_cache_dir/apache-tomcat-7.0.57"
 cp -r apache2 "$compile_cache_dir/apache-tomcat-7.0.57"
+
+
+cd $compile_build_dir
+echo "----> list of files and directory:$(ls -l)"
+#mkdir $tomcat_build_dir/webapps/covisint
+#cp $compile_build_dir/public/index.html $tomcat_build_dir/webapps/covisint
+#cd $tomcat_build_dir/webapps/covisint
+#echo "----> list of files in covisint directory: $(ls -l)"
+
+cd  $compile_build_dir/apache2
+#chmod -R 777 $compile_build_dir/apache2
+echo "----> list of files and directory in apache2:$(ls -l)"
