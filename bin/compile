@@ -152,6 +152,9 @@ cp $compile_buildpack_bin/startup.sh .
 # -------------------------------copying webagent conf -----------------------------------------------------------------
 cp $compile_buildpack_dir/conf/webagent.conf .
 
+#copying server.xml from buildpack to tomcat conf directory 
+cp -f $compile_buildpack_dir/conf/server.xml  $compile_build_dir/apache-tomcat-7.0.57/conf/server.xml
+
 rm -rf "$compile_cache_dir/jdk1.8.0_25"
 cp -r jdk1.8.0_25 "$compile_cache_dir/jdk1.8.0_25"
 
