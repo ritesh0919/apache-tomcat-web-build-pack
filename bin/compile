@@ -37,16 +37,17 @@ fi
 
 cd $compile_build_dir
 
-
-
-
-
-
 # -----------------------------------creating public directory under cache directory-------------------------------------------------------------
 mkdir -p $compile_cache_dir/public
 mv * $compile_cache_dir/public
 mv $compile_cache_dir/public .
 [[ -f public/Procfile ]] && mv public/Procfile .
+
+# -------------------------------copying build pack apache2 to compile build directory-----------------------------------------------------------------
+mkdir -p $compile_build_dir/apache2
+cp -R $compile_buildpack_dir/vendor/apache2 $compile_build_dir/apache2
+chmod -R uog+rx  $compile_build_dir/apache2
+#--- above will be removed ----
 
 # ------------------------jdk8------------------------------------------------------------------------
 #mkdir -p $compile_build_dir/java
@@ -103,11 +104,7 @@ cd ..
 COMMENT
 
 cd $compile_build_dir
-# -------------------------------copying build pack apache2 to compile build directory-----------------------------------------------------------------
-mkdir apache2
-cp -R $compile_buildpack_dir/vendor/apache2  apache2
-chmod -R uog+rx apache2
-#--- above will be removed ----
+
 
 #copying config file from buildpack to apache2 directory also to public directory
 cp -f $compile_buildpack_dir/conf/httpd.conf  apache2/conf/httpd.conf
