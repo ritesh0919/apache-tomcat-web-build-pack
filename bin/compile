@@ -102,21 +102,22 @@ chmod -R uog+rx $compile_build_dir/apache2
 cd ..
 COMMENT
 
+cd $compile_build_dir
 # -------------------------------copying build pack apache2 to compile build directory-----------------------------------------------------------------
-mkdir $compile_build_dir/apache2
-cp -R $compile_buildpack_dir/vendor/apache2  $compile_build_dir/apache2
-chmod -R uog+rx $compile_build_dir/apache2
+mkdir apache2
+cp -R $compile_buildpack_dir/vendor/apache2  apache2
+chmod -R uog+rx apache2
 #--- above will be removed ----
 
 #copying config file from buildpack to apache2 directory also to public directory
-cp -f $compile_buildpack_dir/conf/httpd.conf  $compile_build_dir/apache2/conf/httpd.conf
-[[ -f public/httpd.conf ]] && mv public/httpd.conf  $compile_build_dir/apache2/conf/httpd.conf
+cp -f $compile_buildpack_dir/conf/httpd.conf  apache2/conf/httpd.conf
+[[ -f public/httpd.conf ]] && mv public/httpd.conf  apache2/conf/httpd.conf
 
 #copying vhost config file from buildpack to apache2 directory also to public directory
-cp -f $compile_buildpack_dir/conf/httpd-vhosts.conf  $compile_build_dir/apache2/conf/extra/httpd-vhosts.conf
-[[ -f public/httpd-vhosts.conf ]] && mv public/httpd-vhosts.conf  $compile_build_dir/apache2/conf/extra/httpd-vhosts.conf
+cp -f $compile_buildpack_dir/conf/httpd-vhosts.conf  apache2/conf/extra/httpd-vhosts.conf
+[[ -f public/httpd-vhosts.conf ]] && mv public/httpd-vhosts.conf  apache2/conf/extra/httpd-vhosts.conf
 
-cp -R $compile_buildpack_dir/logs  $compile_build_dir/apache2
+cp -R $compile_buildpack_dir/logs apache2
 # ------------------------------------------------------------------------------------------------
 
 cd  $compile_build_dir/apache2
