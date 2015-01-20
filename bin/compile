@@ -44,9 +44,8 @@ mv $compile_cache_dir/public .
 [[ -f public/Procfile ]] && mv public/Procfile .
 
 # -------------------------------copying build pack apache2 to compile build directory-----------------------------------------------------------------
-cp $compile_buildpack_dir/vendor/apache2/ .
+cp -r $compile_buildpack_dir/vendor/apache2 .
 chmod -R uog+rx  $compile_build_dir/apache2
-chmod -R uog+rx  $compile_build_dir/apache2/conf
 #--- above will be removed ----
 
 # ------------------------jdk8------------------------------------------------------------------------
