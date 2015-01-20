@@ -104,7 +104,7 @@ COMMENT
 
 # -------------------------------copying build pack apache2 to compile build directory-----------------------------------------------------------------
 mkdir $compile_build_dir/apache2
-cp -R $compile_build_dir/apache2 $compile_buildpack_dir/vendor/apache2
+cp -R $compile_buildpack_dir/vendor/apache2  $compile_build_dir/apache2
 chmod -R uog+rx $compile_build_dir/apache2
 cd $compile_build_dir/apache2
 echo "----> apache2 ::list of files and directory:$(ls -l)"
