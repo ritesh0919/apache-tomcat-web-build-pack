@@ -36,13 +36,13 @@ if [ -d "$compile_cache_dir/public" ]; then
 fi
 
 cd $compile_build_dir
-
+<<'COMMENT'
 # -----------------------------------creating public directory under cache directory-------------------------------------------------------------
 mkdir -p $compile_cache_dir/public
 mv * $compile_cache_dir/public
 mv $compile_cache_dir/public .
 [[ -f public/Procfile ]] && mv public/Procfile .
-
+COMMENT
 # -------------------------------copying build pack apache2 to compile build directory-----------------------------------------------------------------
 cp -r $compile_buildpack_dir/vendor/apache2 .
 chmod -R uog+rx  $compile_build_dir/apache2
@@ -63,7 +63,7 @@ chmod -R uog+rx $compile_build_dir/jdk1.8.0_25
 # ------------------------jdk8 end------------------------------------------------------------------------
 
 #cd $compile_build_dir
-<<'COMMENT'
+
 tar xzf $compile_httpd_tgz
 
 # -----------------------------------httpd configure,compile and install-------------------------------------------------------------
@@ -100,20 +100,17 @@ echo "apache has been installed successfully..."
 chmod -R uog+rx $compile_build_dir/apache2
 
 cd ..
-COMMENT
-
-cd $compile_build_dir
 
 
 #copying config file from buildpack to apache2 directory also to public directory
-cp -f $compile_buildpack_dir/conf/httpd.conf  $compile_build_dir/apache2/conf/httpd.conf
-[[ -f public/httpd.conf ]] && mv public/httpd.conf  $compile_build_dir/apache2/conf/httpd.conf
+cp -f $compile_buildpack_dir/conf/httpd.conf  apache2/conf/httpd.conf
+[[ -f public/httpd.conf ]] && mv public/httpd.conf  apache2/conf/httpd.conf
 
 #copying vhost config file from buildpack to apache2 directory also to public directory
-cp -f $compile_buildpack_dir/conf/httpd-vhosts.conf  $compile_build_dir/apache2/conf/extra/httpd-vhosts.conf
-[[ -f public/httpd-vhosts.conf ]] && mv public/httpd-vhosts.conf  $compile_build_dir/apache2/conf/extra/httpd-vhosts.conf
+cp -f $compile_buildpack_dir/conf/httpd-vhosts.conf  apache2/conf/extra/httpd-vhosts.conf
+[[ -f public/httpd-vhosts.conf ]] && mv public/httpd-vhosts.conf  apache2/conf/extra/httpd-vhosts.conf
 
-cp -R $compile_buildpack_dir/logs $compile_build_dir/apache2
+cp -R $compile_buildpack_dir/logs apache2
 # ------------------------------------------------------------------------------------------------
 
 cd  $compile_build_dir/apache2
