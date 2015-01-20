@@ -86,7 +86,11 @@ else
   fi
 fi
 
-#cd $compile_build_dir
+cd $compile_build_dir
+
+export JAVA_HOME="$$compile_build_dir/jdk1.8.0_25"
+export PATH="$JAVA_HOME/bin:$PATH"
+
 
 tar xzf $compile_httpd_tgz
 
@@ -184,3 +188,6 @@ cp $compile_buildpack_bin/startup.sh .
 cp $compile_buildpack_dir/conf/webagent.conf .
 echo "pwd: $(pwd)"
 echo "----> list of files and directory:$(ls -l)" 
+
+rm -rf "$compile_cache_dir/jdk1.8.0_25"
+cp -r jdk1.8.0_25 "$$compile_cache_dir/jdk1.8.0_25"
