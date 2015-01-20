@@ -63,6 +63,27 @@ export PATH=$JAVA_HOME/bin:$PATH
 chmod -R uog+rx $compile_build_dir/jdk1.8.0_25
 # ------------------------jdk8 end------------------------------------------------------------------------
 
+#jdk8
+if [ -d jdk1.8.0_25 ]; then
+  echo "-----> jdk1.8.0_25 folder found, moving along."
+
+else
+  echo -n "-----> jdk1.8.0_25 folder not found! "
+  if [[ -d "$CACHE_DIR/jdk1.8.0_25" ]]; then
+    echo -n "Copying jdk from cache to app... "
+    cp -r "$CACHE_DIR/jdk1.8.0_25" "$BUILD_DIR"
+    echo "Done!"
+
+  else
+    echo -n "-----> Installing (jdk1.8.0_25)....."
+    mkdir "$BUILD_DIR/jdk1.8.0_25"
+    cd "$BUILD_DIR/jdk1.8.0_25"
+    curl --max-time 180 --location "https://s3.amazonaws.com/covisintrnd.com-software/jdk-8u25-linux-x64.gz" | tar xz
+    cd "$BUILD_DIR"
+    echo "Done!"
+  fi
+fi
+
 #cd $compile_build_dir
 
 tar xzf $compile_httpd_tgz
