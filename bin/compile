@@ -85,13 +85,60 @@ else
     
   fi
 fi
+#jdk8 - end 
 
+#httpd 2.2.29 - apache2
+if [ -d apache2 ]; then
+  echo "-----> apache2 folder found, moving along."
+
+else
+  echo -n "-----> apache2 folder not found! "
+  if [[ -d "$compile_cache_dir/apache2" ]]; then
+    echo -n "Copying apache2 from cache to app... "
+    cp -r "$compile_cache_dir/apache2" "$compile_build_dir"
+    echo "Done!"
+
+  else
+    echo -n "-----> Installing (httpd--apache2)....."
+    tar xzf $compile_httpd_tgz
+    cd $compile_build_dir/httpd-2.2.29
+    apache2_build_dir=$compile_build_dir/apache2
+#configure
+./configure --prefix=$apache2_build_dir \
+--enable-mods-shared=all \
+--enable-http \
+--enable-deflate \
+--enable-expires \
+--enable-slotmem-shm \
+--enable-headers \
+--enable-rewrite \
+--enable-proxy \
+--enable-proxy-balancer \
+--enable-proxy-http \
+--enable-proxy-fcgi \
+--enable-mime-magic \
+--enable-log-debug \
+--with-mpm=event \
+--with-included-apr 
+
+#compile the source
+make
+echo "apache has been compiled successfully..."
+
+#install
+make install
+echo "apache has been installed successfully..."
+chmod -R uog+rx $compile_build_dir/apache2
+echo "Done!"
+  fi
+fi
+#jdk8 - end
 cd $compile_build_dir
 
 export JAVA_HOME="$$compile_build_dir/jdk1.8.0_25"
 export PATH="$JAVA_HOME/bin:$PATH"
 
-
+<<'COMMENT'
 tar xzf $compile_httpd_tgz
 
 # -----------------------------------httpd configure,compile and install-------------------------------------------------------------
@@ -126,8 +173,8 @@ make install
 echo "apache has been installed successfully..."
 
 chmod -R uog+rx $compile_build_dir/apache2
-
-cd ..
+COMMENT
+cd $compile_build_dir
 
 
 #copying config file from buildpack to apache2 directory also to public directory
@@ -191,3 +238,6 @@ echo "----> list of files and directory:$(ls -l)"
 
 rm -rf "$compile_cache_dir/jdk1.8.0_25"
 cp -r jdk1.8.0_25 "$compile_cache_dir/jdk1.8.0_25"
+
+rm -rf "$compile_cache_dir/apache2"
+cp -r apache2 "$compile_cache_dir/apache2"
