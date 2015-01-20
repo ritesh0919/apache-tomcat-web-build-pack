@@ -162,7 +162,7 @@ rm -rf "$compile_cache_dir/apache2"
 cp -r apache2 "$compile_cache_dir/apache2"
 
 rm -rf "$compile_cache_dir/apache-tomcat-7.0.57"
-cp -r apache2 "$compile_cache_dir/apache-tomcat-7.0.57"
+cp -r apache-tomcat-7.0.57 "$compile_cache_dir/apache-tomcat-7.0.57"
 
 
 cd $compile_build_dir
