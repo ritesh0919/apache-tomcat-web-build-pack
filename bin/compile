@@ -141,14 +141,33 @@ echo "----> list of files and directory:$(ls -l)"
  
 #cd ..
 
-cd $compile_build_dir
-tar xzf $compile_tomcat_tgz
-tomcat_build_dir=$compile_build_dir/apache-tomcat-7.0.57
-chmod -R uog+rx $tomcat_build_dir
-cd $tomcat_build_dir
-mkdir $tomcat_build_dir/webapps/covisint
-cp $compile_build_dir/public/index.html $tomcat_build_dir/webapps/covisint
+#tomcat
+if [ -d apache-tomcat-7.0.57 ]; then
+  echo "-----> apache-tomcat-7.0.57 folder found, moving along."
 
+else
+  echo -n "-----> apache-tomcat-7.0.57 folder not found! "
+  if [[ -d "$compile_cache_dir/apache-tomcat-7.0.57" ]]; then
+    echo -n "Copying apache-tomcat-7.0.57 from cache to app... "
+    cp -r "$compile_cache_dir/apache-tomcat-7.0.57" "$compile_build_dir"
+    echo "Done!"
+
+  else
+    echo -n "-----> Extracting (apache-tomcat-7.0.57)....."
+    tar xzf $compile_tomcat_tgz
+    tomcat_build_dir=$compile_build_dir/apache-tomcat-7.0.57
+    chmod -R uog+rx $tomcat_build_dir
+    cd $tomcat_build_dir
+    mkdir $tomcat_build_dir/webapps/covisint
+    cp $compile_build_dir/public/index.html $tomcat_build_dir/webapps/covisint
+    cd "$compile_build_dir"
+    chmod -R uog+rx $compile_build_dir/apache-tomcat-7.0.57
+    echo "Done!"
+    
+  fi
+fi
+#tomcat - end
+cd $compile_build_dir
 echo "----> list of files and directory:$(ls -l)"
 
 cd $tomcat_build_dir/webapps/covisint
@@ -169,3 +188,6 @@ cp -r jdk1.8.0_25 "$compile_cache_dir/jdk1.8.0_25"
 
 rm -rf "$compile_cache_dir/apache2"
 cp -r apache2 "$compile_cache_dir/apache2"
+
+rm -rf "$compile_cache_dir/apache-tomcat-7.0.57"
+cp -r apache2 "$compile_cache_dir/apache-tomcat-7.0.57"
