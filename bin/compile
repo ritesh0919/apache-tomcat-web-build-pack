@@ -159,7 +159,9 @@ cp -f $compile_buildpack_dir/vendor/libct_apache22_agent-4.8.0.46-x64.so apache2
 cd $compile_build_dir/apache2/modules
 rm libct_apache22_agent
 ln -s apache2/modules/libct_apache22_agent-4.8.0.46-x64.so libct_apache22_agent
+chmod uog+rx libct_apache22_agent
 cd $compile_build_dir
+
 # -------------------------------copying webagent conf ---------------------------------------
 
 #copying server.xml from buildpack to tomcat conf directory 
