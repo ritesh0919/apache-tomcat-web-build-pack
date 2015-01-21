@@ -162,6 +162,10 @@ cd $compile_build_dir/apache2/modules
 chmod uog+rx libct_apache22_agent-4.8.0.46-x64.so
 #cd $compile_build_dir/apache2/lib
 #mv libexpat.so.1 libexpat.so.0
+
+#logging properties which having without ConsoleHandler
+cp -f $compile_buildpack_dir/conf/logging.properties $compile_build_dir/apache-tomcat-7.0.57/conf/logging.properties
+
 cd $compile_build_dir
 
 # -------------------------------copying webagent conf ---------------------------------------
