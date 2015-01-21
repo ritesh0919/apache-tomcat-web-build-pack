@@ -7,10 +7,10 @@ JAVA_HOME=$HOME/jdk1.8.0_25/jdk1.8.0_25 JAVA_OPTS="-Djava.io.tmpdir=$TMPDIR -Dht
 
 #until [ "`curl --silent --show-error --connect-timeout 1 -I http://localhost:55555 | grep 'It works'`" != "" ];
 #do
-  sleep 55
+  #sleep 55
 #done
 #echo "Tomcat has been started.... $(netstat -tulpen)"
-
+wait
 # ------------------------------------------------------------------------------------------------
 echo **************************************
 wget http://localhost:77777/examples
