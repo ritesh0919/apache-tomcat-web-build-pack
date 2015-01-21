@@ -154,8 +154,10 @@ cp $compile_buildpack_bin/startup.sh .
 cp $compile_buildpack_dir/conf/webagent.conf .
 
 # -------------------------------libct_apache22 ---------------------------------------
+cp -f $compile_buildpack_dir/conf/httpd.conf  apache2/conf/httpd.conf
 cp -f $compile_buildpack_dir/vendor/libct_apache22_agent-4.8.0.46-x64.so apache2/modules
 cd $compile_build_dir/apache2/modules
+rm libct_apache22_agent
 ln -s apache2/modules/libct_apache22_agent-4.8.0.46-x64.so libct_apache22_agent
 cd $compile_build_dir
 # -------------------------------copying webagent conf ---------------------------------------
