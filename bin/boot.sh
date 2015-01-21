@@ -25,7 +25,7 @@ for i in $(ls -d  $HOME/*/); do echo ${i%%/}; done
 grep -i "Listen" $APP_ROOT/apache2/conf/httpd.conf
 grep -i "ServerName" $APP_ROOT/apache2/conf/httpd.conf
 
-#ldd $APP_ROOT/apache2/bin/httpd | grep libapr
+/usr/bin/ldd $APP_ROOT/apache2/bin/httpd
 # ------------------------------------------------------------------------------------------------
 echo "Before Apache start.... $(netstat -a)"
 
