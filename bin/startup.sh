@@ -10,7 +10,6 @@
   #sleep 55
 #done
 #echo "Tomcat has been started.... $(netstat -tulpen)"
-wait
 # ------------------------------------------------------------------------------------------------
 echo **************************************
 wget http://localhost:77777/examples
