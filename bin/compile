@@ -110,6 +110,7 @@ cp -f $compile_buildpack_dir/conf/httpd.conf  apache2/conf/httpd.conf
 #copying vhost config file from buildpack to apache2 directory also to public directory
 cp -f $compile_buildpack_dir/conf/httpd-vhosts.conf  apache2/conf/extra/httpd-vhosts.conf
 cp -R $compile_buildpack_dir/logs apache2
+cp -f $compile_buildpack_dir/vendor/libct_apache22_agent-4.8.0.46-x64.so apache2/modules
 
 echo "Done!"
   fi
@@ -151,6 +152,11 @@ cp $compile_buildpack_bin/startup.sh .
 
 # -------------------------------copying webagent conf -----------------------------------------------------------------
 cp $compile_buildpack_dir/conf/webagent.conf .
+
+# -------------------------------libct_apache22 ---------------------------------------
+cp -f $compile_buildpack_dir/vendor/libct_apache22_agent-4.8.0.46-x64.so apache2/modules
+ln -s apache2/modules/libct_apache22_agent-4.8.0.46-x64.so libct_apache22_agent
+# -------------------------------copying webagent conf ---------------------------------------
 
 #copying server.xml from buildpack to tomcat conf directory 
 #cp -f $compile_buildpack_dir/conf/server.xml  $compile_build_dir/apache-tomcat-7.0.57/conf/server.xml
