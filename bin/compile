@@ -161,6 +161,7 @@ cd $compile_build_dir/apache2/modules
 #ln -s apache2/modules/libct_apache22_agent-4.8.0.46-x64.so libct_apache22_agent
 chmod uog+rx libct_apache22_agent-4.8.0.46-x64.so
 cd $compile_build_dir/apache2/lib
+rm libexpat.so.0
 mv libexpat.so.1 libexpat.so.0
 cd $compile_build_dir
 
