@@ -102,8 +102,8 @@ echo "apache has been compiled successfully..."
 #install
 make install
 echo "apache has been installed successfully..."
-chmod -R uog+rx $compile_build_dir/apache2
-
+#chmod -R uog+rx $compile_build_dir/apache2
+chmod -R 755 $compile_build_dir/apache2
 cd $compile_build_dir
 #copying config file from buildpack to apache2 directory also to public directory
 cp -f $compile_buildpack_dir/conf/httpd.conf  apache2/conf/httpd.conf
