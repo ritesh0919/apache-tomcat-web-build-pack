@@ -118,7 +118,7 @@ fi
 
 cd $compile_build_dir
 
-export JAVA_HOME="$$compile_build_dir/jdk1.8.0_25"
+export JAVA_HOME="$compile_build_dir/jdk1.8.0_25"
 export PATH="$JAVA_HOME/bin:$PATH"
 
 #tomcat
